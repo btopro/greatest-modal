@@ -1,7 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../materializecss-styles/materializecss-styles.html">
-<link rel="import" href="../hax-body-behaviors/hax-body-behaviors.html">
-<link rel="import" href="../schema-behaviors/schema-behaviors.html">
+<link rel="import" href="../rick-roll/rick-roll.html">
+<link rel="import" href="../lrnsys-layout/lrnsys-dialog.html">
+
 <!--
 `greatest-modal`
 A LRN element
@@ -21,14 +21,21 @@ A LRN element
         display: block;
       }
     </style>
-    <h2>[[title]]</h2>
+    <lrnsys-dialog class="circle" id="dialogbutton" raised hover-class="black white-text" text="Open the modal" alt="This is the greatest modal ever" icon="icons:link">
+      <h2 slot="header">You got rick rolled!</h2>
+      <div>
+        <rick-roll id="rickroll"></rick-roll>
+      </div>
+  </lrnsys-dialog>
   </template>
 
   <script>
     Polymer({
 
       is: 'greatest-modal',
-      behaviors: [HAXBehaviors.PropertiesBehaviors, MaterializeCSSBehaviors.ColorBehaviors, SchemaBehaviors.Schema],
+      listeners: {
+        'dialogbutton.tap': '_rickRollThemPpl',
+      },
       properties: {
         /**
          * Title
@@ -38,54 +45,14 @@ A LRN element
         },
       },
       /**
-       * Attached to the DOM, now fire.
+       * A silly callback just to rick roll someone on webcomponents . org
        */
-      attached: function() {
-        // Establish hax property binding
-        let props = {
-          'canScale': true,
-          'canPosition': true,
-          'canEditSource': false,
-          'gizmo': {
-            'title': 'Sample gizmo',
-            'description': 'The user will be able to see this for selection in a UI.',
-            'icon': 'av:play-circle-filled',
-            'color': 'grey',
-            'groups': ['Video', 'Media'],
-            'handles': [
-              {
-                'type': 'video',
-                'url': 'source'
-              }
-            ],
-            'meta': {
-              'author': 'Your organization on github'
-            }
-          },
-          'settings': {
-            'quick': [
-              {
-                'property': 'title',
-                'title': 'Title',
-                'description': 'The title of the element',
-                'inputMethod': 'textfield',
-                'icon': 'editor:title',
-              },
-            ],
-            'configure': [
-              {
-                'property': 'title',
-                'title': 'Title',
-                'description': 'The title of the element',
-                'inputMethod': 'textfield',
-                'icon': 'editor:title',
-              },
-            ],
-            'advanced': [
-            ]
-          }
-        };
-        this.setHaxProperties(props);
+      _rickRollThemPpl: function(e) {
+        var normalizedEvent = Polymer.dom(e);
+        var local = normalizedEvent.localTarget;
+        if (local.tagName === 'LRNSYS-DIALOG') {
+          this.$.rickroll.auto = true;
+        }
       },
     });
   </script>
