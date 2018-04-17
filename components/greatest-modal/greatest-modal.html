@@ -1,0 +1,59 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../rick-roll/rick-roll.html">
+<link rel="import" href="../lrnsys-layout/lrnsys-dialog.html">
+
+<!--
+`greatest-modal`
+A LRN element
+
+@demo demo/index.html
+
+@microcopy - the mental model for this element
+ -
+ -
+
+-->
+
+<dom-module id="greatest-modal">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <lrnsys-dialog class="circle" id="dialogbutton" raised hover-class="black white-text" text="Open the modal" alt="This is the greatest modal ever" icon="icons:link">
+      <h2 slot="header">You got rick rolled!</h2>
+      <div>
+        <rick-roll id="rickroll"></rick-roll>
+      </div>
+  </lrnsys-dialog>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'greatest-modal',
+      listeners: {
+        'dialogbutton.tap': '_rickRollThemPpl',
+      },
+      properties: {
+        /**
+         * Title
+         */
+        title: {
+          type: String,
+        },
+      },
+      /**
+       * A silly callback just to rick roll someone on webcomponents . org
+       */
+      _rickRollThemPpl: function(e) {
+        var normalizedEvent = Polymer.dom(e);
+        var local = normalizedEvent.localTarget;
+        if (local.tagName === 'LRNSYS-DIALOG') {
+          this.$.rickroll.auto = true;
+        }
+      },
+    });
+  </script>
+</dom-module>
